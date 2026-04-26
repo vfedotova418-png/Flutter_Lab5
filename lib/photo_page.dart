@@ -1,6 +1,6 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 enum PhotoType { dog, landscapes }
 
@@ -13,6 +13,14 @@ class PhotoPage extends StatefulWidget {
 }
 
 class _PhotoPageState extends State<PhotoPage> {
+  final List<String> _localPhotos = [
+    'assets/images/photo1.png',
+    'assets/images/photo2.png',
+    'assets/images/photo3.png',
+    'assets/images/photo4.png',
+    'assets/images/photo5.png',
+    'assets/images/photo6.png',
+  ];
   String? _imageUrl;
   bool _isLoading = false;
   String? _errorMessage;
@@ -25,26 +33,15 @@ class _PhotoPageState extends State<PhotoPage> {
       _imageUrl = null;
     });
     try {
-      String url;
-      http.Response response;
-
-      if (_animalType == PhotoType.dog) {
-        url =
-            'https://dog.ceo/api/breeds/image/random';
-        response = await http.get(Uri.parse(url));
-        Map<String, dynamic> data = jsonDecode(
-          response.body,
-        );
-        _imageUrl = data['message'];
-      } else {
-        final random =
-            DateTime.now().millisecondsSinceEpoch;
-        _imageUrl =
-            'https://picsum.photos/seed/$random/800/800';
-      }
+      await Future.delayed(
+        const Duration(seconds: 2),
+      );
+      final randomIndex =
+          DateTime.now().microsecondsSinceEpoch %
+          _localPhotos.length;
+      _imageUrl = _localPhotos[randomIndex];
     } catch (e) {
-      _errorMessage =
-          'Не удалось загрузить фото.\nПроверьте подключение к интернету.';
+      _errorMessage = 'Ошибка загрузки фото';
     }
 
     setState(() {
@@ -144,7 +141,7 @@ class _PhotoPageState extends State<PhotoPage> {
             borderRadius: BorderRadius.circular(
               16,
             ),
-            child: Image.network(
+            child: Image.asset(
               _imageUrl!,
               fit: BoxFit.cover,
               width: double.infinity,

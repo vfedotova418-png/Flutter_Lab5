@@ -1,17 +1,70 @@
-# photo_of_the_day
+# Лабораторная работа №5. Асинхронность в Dart и Flutter.
 
-A new Flutter project.
+ФИО: Федотова В.С.
 
-## Getting Started
+Группа: ИСП-232
 
-This project is a starting point for a Flutter application.
+Дата: 26.04.26
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Описание
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Простое приложение, случайно показывающее изображение. Имеет переключатель между изображениями собаки или пейзажа.
+
+## Стек и версия
+
+- Flutter: 3.41.1
+
+- Dart: 3.11.0
+
+- Платформа: Web (Edge)/Windows
+
+- Пакет: http
+
+## Скриншот приложения
+
+![Скриншот](img/step2_Fedotova.png)
+
+## Запуск
+
+1. `git clone https://github.com/vfedotova418-png/Flutter_Lab5.git`
+
+2. `cd photo_of_the_day`
+
+3. `flutter pub get`
+
+4. `flutter run -d chrome`
+
+## Что изучили
+
+- Принцип работы и причина использования Future
+
+- async/await в Dart
+
+- Использование интернет-ссылок для изображений
+
+## Вопросы
+
+1. Что такое Future<T>? Чем отличается от обычного возвращаемого значения?
+
+Future — это объект, который обещает вернуть значение типа T в будущем.
+
+2. Что делает await? Блокирует ли он весь поток выполнения?
+
+await делакт асинхронный код похожим на обычный синхронный.
+Приостанавливает функцию до завершения Future, не блокируя поток.
+
+3. Зачем setState() вызывается дважды в \_fetchPhoto()?
+
+В начале: сразу показываем загрузку и сбрасываем предыдущий результат
+
+В конце: скрываем загрузку после получения результата
+
+4. Почему кнопке передаётся \_fetchPhoto без скобок, а не \_fetchPhoto()?
+
+`_fetchPhoto` без скобок — мы передаём ссылку на функцию, а не вызываем её. `_fetchPhoto()` со скобками вызвало бы функцию немедленно при построении виджета.
+
+5. Чем Image.network() отличается от Image.asset()?
+
+`Image.network()` внутри сам загружает картинку по URL и отображает её. Это синхронный виджет — Flutter сам управляет загрузкой изображения внутри.
